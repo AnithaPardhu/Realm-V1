@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here -->
+</head>
+<body>
+    <h1>MP4 Video Player</h1>
+    <video id="mp4Player" controls autoplay>
+        {% for video_url in video_urlsa %}
+        <source src="{{ video_url }}" type="video/mp4">
+        {% endfor %}
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        // Function to switch back to HLS player
+        function switchToHLSPlayer() {
+            var video = document.getElementById('mp4Player');
+            video.pause();
+            video.currentTime = 0; // Reset the playback position to the beginning
+            window.location.href = "{% url 'player' video.id %}";
+        }
+
+        // Add an event listener to the MP4 video element to detect when it ends
+        var mp4Video = document.getElementById('mp4Player');
+        mp4Video.addEventListener('ended', switchToHLSPlayer);
+    </script>
+</body>
+</html>

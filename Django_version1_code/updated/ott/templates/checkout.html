@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- templates/payment/checkout.html -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"
+data-key="{{ order.key }}"
+data-amount="{{ order.amount }}"
+data-currency="INR"
+data-order_id="{{ order.id }}"
+data-buttontext="Pay with Razorpay"
+data-name="Your Company Name"
+data-description="Payment for your order"
+data-image="your_image_url"
+data-prefill.name="Your Name"
+data-prefill.email="your@email.com"
+data-theme.color="#F37254"
+></script>
+
+</body>
+</html>

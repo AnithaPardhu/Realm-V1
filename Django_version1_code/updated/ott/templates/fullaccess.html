@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTT Platform Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: black;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-section label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    /* Style for select inputs */
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Custom arrow icon for the select inputs */
+    select::after {
+      content: '\25BC';
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Hover style for the select inputs */
+    select:hover {
+      border-color: orangered;
+    }
+
+    /* Style for the buttons */
+    button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color:orangered;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color:orangered;
+    }
+
+    
+    .navbar-brand img {
+            width: 135px;
+            height: 68px;
+        }
+
+
+        a.unblock-button {
+    background-color:orangered; /* Set the background color */
+    color: white; /* Set the text color */
+    padding: 10px 20px; /* Add some padding to the button */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; /* Set the font size */
+    border-radius: 4px; /* Add rounded corners */
+  }
+
+  /* Hover effect for the link button */
+  a.unblock-button:hover {
+    background-color: orangered; /* Change the background color on hover */
+  }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'logo/logo.png'%}" alt="Logo" class="logo">
+    </a>
+</nav>
+  <h1>User Profiles</h1>
+  <div class="container">
+
+    <h1>Manage Movie Access</h1>
+    <div class="form-section">
+      <form method="post" action="{% url 'save_form_data' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="profileSelect">Select a Profile:</label>
+          <select id="profileSelect" name="profile_name">
+            <option value="">Select a Profile</option>
+            {% for profile in profiles %}
+            <option value="{{ profile.name }}">{{ profile.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" style="display: none";>
+          <label for="userSelect">Select a User ID:</label>
+          <select id="userSelect" name="user_id">
+            {% for profile in profiles %}
+            <option value="{{ profile.user_id }}" selected>{{ profile.user_id }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="movieSelect">Select Movie(s):</label>
+          <select id="movieSelect" name="movie_title" multiple>
+            {% for movie in movies %}
+            <option value="{{ movie.title }}">{{ movie.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" style="margin-left: 40%; margin-top: 2%;">Block</button>
+      </form>
+    </div>
+<h1 >Genre Access Control</h1>
+    <div class="form-section">
+      <form method="post" action="{% url 'save_selection' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="profileSelect">Select a Profile:</label>
+          <select id="profileSelect" name="profile_name">
+            <option value="">Select a Profile</option>
+            {% for profile in profiles %}
+            <option value="{{ profile.name }}">{{ profile.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" style="display: none";>
+          <label for="userSelect">Select a User ID:</label>
+          <select id="userSelect" name="user_id">
+            {% for profile in profiles %}
+            <option value="{{ profile.user_id }}" selected>{{ profile.user_id }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="genre_select">Select Genres (multiple):</label>
+          <select id="genre_select" name="genre" multiple>
+            <!-- Add options for all genres here -->
+            {% for g in genre %}
+            <option value="{{ g.id }}">{{ g.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" style="margin-left: 40%; margin-top: 2%;">Save Selection</button>
+      </form>
+    </div>
+    
+  </div>
+<center>
+  
+<a class="unblock-button" href="{% url 'fullaccess1' %}">UnBlock</a>
+</center>
+</body>
+</html>

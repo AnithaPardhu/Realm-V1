@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Lock</title>
+    <style>
+        /* Reset some default styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centering the content */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black; /* Darker Background color */
+            margin: 0;
+        }
+
+        /* Container styles */
+        .container {
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            background-color: #333; /* Container background color */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White shadow effect */
+            color: white; /* Text color */
+        }
+
+        /* Header styles */
+        h1 {
+            font-size: 24px;
+            color: #e74c3c; /* Header text color */
+            margin-bottom: 20px;
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+            text-align: center;
+        
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: white; /* Label text color */
+            text-align: left; /* Align the label text to the left */
+            
+        }
+
+        /* Pin input styles */
+        .pin-input {
+            display: flex;
+            justify-content: center;
+            background-color:black;
+        }
+
+        .pin-box {
+            width: 30px; /* Adjust width for your design */
+            height: 30px; /* Adjust height for your design */
+            padding: 5px;
+            margin: 0 5px; /* Add spacing between digits */
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333; /* Input text color */
+            box-shadow: white;
+        }
+
+        /* Button styles */
+     
+        /* Error message styles */
+        #error-message {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #e74c3c; /* Error message color */
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Add this CSS rule to change the link color */
+.return-link {
+    color: orangered; /* Orangered color for the link */
+    text-decoration: none; /* Remove underlines from links */
+}
+
+/* Add a hover effect for the link */
+.return-link:hover {
+    text-decoration: underline; /* Underline the link on hover */
+}
+
+.btn {
+    display: inline-block;
+    padding: 5px 5px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px; /* Adjust border radius as needed */
+}
+
+/* Primary button styles */
+.btn-primary {
+    background-color: orangered; /* Primary button color */
+    color: #fff; /* Text color for the button */
+}
+
+/* Hover effect for primary button */
+.btn-primary:hover {
+    background-color: steelblue; /* Change color on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+/* Style the label */
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px; /* Add some spacing below the label */
+   
+    
+}
+
+/* Style the input field */
+.form-group input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid whitesmoke; /* Add a subdued border color */
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: black; /* Light grey background color */
+}
+
+
+/* Style the button on hover */
+.form-group button[type="submit"]:hover {
+    background-color: steelblue; /* Change the background color on hover */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Profile Lock</h1>
+        <p><span class="pin-label">Your PIN:</span></p>
+        <div class="pin-input">
+            <!-- Display current PIN -->
+            {% for digit in profile.pin %}
+                <input type="text" maxlength="1" class="pin-box" value="{{ digit }}" readonly>
+            {% endfor %}
+        </div>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.new_pin.id_for_label }}">New PIN:</label>
+                {{ form.new_pin }}
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Update PIN</button>
+        </form>
+        
+        <p id="returnToPinPageLink" style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'profiles' %}" id="backButtonLink" class="return-link">Return to Profile Page</a>
+        </p>
+    </div>
+</body>
+</html>
